@@ -80,7 +80,7 @@ $ pwd
 /Test
 
 pwd命令显示当前目录，记录路径方便下面的操作。
-②通过git init命令把此目录变为可以Git管理的仓库，经过这个操作，当前目录下多了一个.git的目录，这个目录是Git来跟踪管理版本库的，一般情况下不要修改以防破坏Git仓库。
+②通过--git init---命令把此目录变为可以Git管理的仓库，经过这个操作，当前目录下多了一个.git的目录，这个目录是Git来跟踪管理版本库的，一般情况下不要修改以防破坏Git仓库。
 $ git init
 Initialized empty Git repository in D:/Git/Test/.git/
 
@@ -120,5 +120,41 @@ Branch master set up to track remote branch master from origin.
 $ git add hellogit.txt
 $ git commit -m "hellogit"
  git push origin master
+
+最后需要说明的一点是，如果本地仓库为空是不能提交的，如果运行git push -u origin master出现error错误，一般情况下都是仅进行了init操作，没有进行add与commit操作。
 ————————————————
 
+本地Git与远程GitHub连接的建立
+这一步操作至关重要，只有将Git本地与远程的GitHub建立了连接以后我们本地的项目才能上传至远程服务器
+1、Git终端的配置，生成公钥文件，用来连接github
+在git终端输入如下命令，然后连续敲3个回车即可：
+ssh-keygen -t rsa -C (这里是你的邮箱地址)
+效果如下：
+
+2、本地的配置
+2.1 命令执行成功后，在本地电脑的C:\Users\dell下的名为.ssh的目录下找到名为id_rsa.pub的文件，打开这个文件后将里面的内容先复制下来；
+2.2 这里还需要进行的一步操作是：为了防止git连接失败，可在.ssh文件夹下新建一个无后缀的名称为config的文件，在里面加入下面代码：
+
+Host github.com
+User git 
+Hostname ssh.github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa
+Port 443
+3、远程的配置
+进入到GitHub的官网，点击右上角图标下的settings:
+
+然后，在出现的左边的settings栏目中选择SSH and GPG Keys：
+
+然后在出来的左边的框框中选择 New SSH：
+
+弹出下图：
+
+其中Title可以随意写个名字，Key里面的内容需要将2.1步中复制的id_rsa.pub文件中的内容拷贝进去，注意不是config文件的代码！最后点击Add即可。
+4、验证连接是否成功建立
+在git终端上输入如下命令：
+
+ssh -T git@github.com
+如果出现下图所示的内容说明连接成功
+
+如果出现错误可以尝试通过执行 ssh -T -p 22 git@github.com 命令来解决，其中-p 22表示将服务器端口改为22。
