@@ -65,3 +65,60 @@ rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
 $ git config --global alias.st status
 
 有一个仓库，叫Repo A。你如果要往里面贡献代码，首先要Fork这个Repo，于是在你的Github账号下有了一个Repo A2,。然后你在这个A2下工作，Commit，push等。然后你希望原始仓库Repo A合并你的工作，你可以在Github上发起一个Pull Request，意思是请求Repo A的所有者从你的A2合并分支。如果被审核通过并正式合并，这样你就为项目A做贡献了
+------------------------------------------------------------------------------------------------------------------------------------------
+windows环境下，搭建git服务器,并同步到远程githup上：
+一、：设置自己的名字和邮箱：
+因为Git是分布式版本控制系统，所以，每个机器都必须自报家门：你的名字和Email地址。在命令行中输入以下命令并填入相关信息：
+$ git config --global user.name "Your Name"
+$ git config --global user.email "email@example.com"
+————————————————
+二：在本地创建版本库：
+①：找到一个适当的地方，点击右键Git Bash Here进入命令行输入以下命令创建一个文件夹：
+$ mkdir Test
+$ cd Test
+$ pwd
+/Test
+
+pwd命令显示当前目录，记录路径方便下面的操作。
+②通过git init命令把此目录变为可以Git管理的仓库，经过这个操作，当前目录下多了一个.git的目录，这个目录是Git来跟踪管理版本库的，一般情况下不要修改以防破坏Git仓库。
+$ git init
+Initialized empty Git repository in D:/Git/Test/.git/
+
+三：添加文件到版本库
+我们可以先打开文件夹，先创建一个hellogit.txt放入该目录下。经过以下两步就可将文件放入到版本库中了：
+①：用命令git add告诉Git，把文件添加到仓库
+$ git add hellogit.txt
+
+②： 用命令git commit -m “wrote a readme file”
+告诉Git，把文件提交到仓库，此处的wrote a readme file为本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录
+$ git commit -m "hellogit"
+[master (root-commit) 6c4fe71] hellogit
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 hellogit.txt
+四：添加远程库
+此时你已经在本地创建了一个Git仓库后，又想在GitHub创建一个Git仓库，并且让这两个仓库进行远程同步，这样，GitHub上的仓库既可以作为备份，又可以让其他人通过该仓库来协作。
+①注册并登录GitHub，按照以下三步操作即可创建一个仓库。第一步为创建一个新的仓库，第二步为仓库起一个名字Test，第三步确认创建。
+②可以把一个已有的本地仓库与之关联，然后把本地仓库的内容推送到GitHub仓库。按照上面提示创建完成后会转到当前页面。注意圈出的内容，将以下内容复制。
+复制完成后，回到我们的Git Bash，输入以下命令，再粘贴上刚才复制的内容，就将我们本地的仓库和远程库连接了起来。
+git remote add origin https://github.com/lywlong/gitdemo.git
+
+五：传文件到远程库
+按照前面的提示，我们已经安装好了本地的仓库以及远程的仓库，并且进行了简单的配置，这时候我们可以尝试提交文件了。输入push命令：
+$ git push -u origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 208 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git@github.com:SssUuuu/Test.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+
+完成之后我们再刷新GitHub就能看到文件已经同步完成。
+
+以后只要本地作了提交，就可以通过以下命令来把本地最新修改推送至GitHub
+ git push origin master
+也就是说以后我们想在远程仓库中同步我们的文件，只需要先将文件传到本地仓库，再push到远程库：
+$ git add hellogit.txt
+$ git commit -m "hellogit"
+ git push origin master
+————————————————
+
