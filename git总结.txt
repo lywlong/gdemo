@@ -88,7 +88,7 @@ Initialized empty Git repository in D:/Git/Test/.git/
 我们可以先打开文件夹，先创建一个hellogit.txt放入该目录下。经过以下两步就可将文件放入到版本库中了：
 ①：用命令git add告诉Git，把文件添加到仓库
 $ git add hellogit.txt
-
+如果是项目下：git add . ----.代表添加文件夹下所有文件
 ②： 用命令git commit -m “wrote a readme file”
 告诉Git，把文件提交到仓库，此处的wrote a readme file为本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录
 $ git commit -m "hellogit"
