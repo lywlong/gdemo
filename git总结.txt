@@ -1,3 +1,5 @@
+github在2020/10/1宣布,所有新库都将用中性词「main」命名，取代原来的「master」，如果我们通过git push -u grigin master 方法上传仓库，在github仓库中就会出现一个master的分支。
+
 创建版本库:
 $ mkdir learngit
 $ cd learngit
